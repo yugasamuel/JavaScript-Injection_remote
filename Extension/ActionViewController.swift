@@ -19,6 +19,7 @@ class ActionViewController: UIViewController {
         super.viewDidLoad()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showAlert))
         
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -38,6 +39,12 @@ class ActionViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    @objc func showAlert() {
+        let ac = UIAlertController(title: "Choose action", message: nil, preferredStyle: .actionSheet)
+        ac.addAction(UIAlertAction(title: "Get document title", style: .default) { _ in self.script.text += "alert(document.title);" } )
+        present(ac, animated: true)
     }
     
     @objc func adjustForKeyboard(notification: Notification) {
